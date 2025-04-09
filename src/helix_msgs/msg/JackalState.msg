@@ -1,0 +1,9 @@
+float64 x
+float64 y
+float64 theta
+float64 v_x
+float64 v_y
+float64 v_theta
+float64 a_x
+float64 a_y
+float64 a_theta

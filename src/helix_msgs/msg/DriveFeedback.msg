@@ -1,0 +1,7 @@
+float32 current
+float32 duty_cycle
+float32 bridge_temperature
+float32 motor_temperature
+float32 measured_velocity
+float32 measured_travel
+bool driver_fault

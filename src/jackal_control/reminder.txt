@@ -1,0 +1,23 @@
+/helix/motor_manager/feedback
+/mavlink/from
+/tf
+
+ssh helix@10.0.1.5
+copperstone
+./tmux_floam.sh
+roslaunch cst_uofa mavros.launch
+rosrun mavros mavcmd long 176 0 3 0 0 0 0 0
+
+Xvfb :99 -screen 0 1024x768x16 &
+export DISPLAY=:99
+
+rosrun helix_control helix_collect_state.py
+rosrun helix_control helix_manual_control.py
+rosrun helix_control helix_mpc_square_repeat.py 
+
+rostopic echo /odom
+rostopic echo /output_mpc_value
+
+roslaunch mavros px4.launch fcu_url:="/dev/ttyACM0:57600"
+rosrun mavros mavsys rate --raw-sensors 100
+rosrun mavros mavsys rate --extra1 100

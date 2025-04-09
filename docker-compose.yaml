@@ -1,0 +1,13 @@
+version: '3'
+services:
+  noetic:
+    build: .
+    container_name: noetic_docker
+    network_mode: host
+    volumes:
+      - ./src:/root/catkin_ws/src
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY}
+    stdin_open: true
+    tty: true
