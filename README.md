@@ -29,42 +29,57 @@ This project develops a Model Predictive Control (MPC) strategy for energy conse
 
 ### Prerequisites
 
-- Ubuntu 22.04  
-- ROS2 Humble  
-- Python 3.8+
-- CUDA 11.8 or above (for GPU acceleration)  
-- Parrot Anafi SDK  
-- OpenCV, NumPy, SciPy, CasADi, cv_bridge, sensor_msgs, geometry_msgs, etc.
+- Docker
 
-### Clone Repository
+### Create the Docker env
 
-```bash
-git clone https://github.com/zjiang11/anafi_ws.git
-```
+#### Create a Working Directory
 
-### Install ROS2 Package
+On your host machine, create a directory to store the Dockerfile:
 
 ```bash
-sudo apt install ros-<ros2-distro>-rclpy ros-<ros2-distro>-sensor-msgs ros-<ros2-distro>-tf2-msgs ros-<ros2-distro>-geometry-msgs ros-<ros2-distro>-cv-bridge
-source /opt/ros/<ros2-distro>/setup.bash
+mkdir jackal_ws
+cd jackal_ws
 ```
 
-### Install Anafi SDK
+#### Download the Dockerfile
+
+Download the Dockerfile by click Download raw file on the right-up side of the screen.
+
+Move the Dockerfile to the jackal_ws
 
 ```bash
-pip3 install parrot-olympe
+mv ~/Downloads/Dockerfile ~/jackal_ws/
 ```
 
-### Install Python Package
+#### Create the Docker Contaienr
 
 ```bash
-cd ~/anafi_ws
-pip install -r requirements.txt
+cd ~/jackal_ws
+docker build -t noetic_docker .
 ```
 
-### Install CUDA
+#### Verify the Image
 
-Visit https://developer.nvidia.com/cuda-downloads for CUDA download.
+```bash
+docker images
+```
+
+You should see noetic_docker in the list of images.
+
+#### Run the Container
+
+```bash
+docker run -it noetic_docker
+```
+
+#### Clone the Code inside the Container
+
+```bash
+cd /root/helix_ws
+git clone https://github.com/zjiang11/helix_ws.git
+```
+
 
 ---
 
@@ -73,9 +88,9 @@ Visit https://developer.nvidia.com/cuda-downloads for CUDA download.
 ### Build Program
 
 ```bash
-cd ~/anafi_ws
-colcon build
-source install/setup.bash
+cd ~/helix_ws
+catkin_make
+source devel/setup.bash
 ```
 
 ### Derive the Quaternions for Representing Pose
